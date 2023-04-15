@@ -1,0 +1,14 @@
+export const data = JSON.parse("{\"key\":\"v-81d149f4\",\"path\":\"/vue/vue-for-everyone/vue-for-everyone-3.html\",\"title\":\"3. 把页面拼成个Web应用\",\"lang\":\"en-US\",\"frontmatter\":{\"title\":\"3. 把页面拼成个Web应用\"},\"headers\":[{\"level\":2,\"title\":\"SPA 与 MPA\",\"slug\":\"spa-与-mpa\",\"link\":\"#spa-与-mpa\",\"children\":[]},{\"level\":2,\"title\":\"其他应用\",\"slug\":\"其他应用\",\"link\":\"#其他应用\",\"children\":[]},{\"level\":2,\"title\":\"页面结构设计\",\"slug\":\"页面结构设计\",\"link\":\"#页面结构设计\",\"children\":[]},{\"level\":2,\"title\":\"页面路由设计\",\"slug\":\"页面路由设计\",\"link\":\"#页面路由设计\",\"children\":[]},{\"level\":2,\"title\":\"目录结构划分\",\"slug\":\"目录结构划分\",\"link\":\"#目录结构划分\",\"children\":[]},{\"level\":2,\"title\":\"使用开源库和工具\",\"slug\":\"使用开源库和工具\",\"link\":\"#使用开源库和工具\",\"children\":[]},{\"level\":2,\"title\":\"安装和引入 vue-router\",\"slug\":\"安装和引入-vue-router\",\"link\":\"#安装和引入-vue-router\",\"children\":[{\"level\":3,\"title\":\"1. 安装依赖\",\"slug\":\"_1-安装依赖\",\"link\":\"#_1-安装依赖\",\"children\":[]},{\"level\":3,\"title\":\"2. 引入 vue-router\",\"slug\":\"_2-引入-vue-router\",\"link\":\"#_2-引入-vue-router\",\"children\":[]}]},{\"level\":2,\"title\":\"使用 vue-router 添加路由\",\"slug\":\"使用-vue-router-添加路由\",\"link\":\"#使用-vue-router-添加路由\",\"children\":[{\"level\":3,\"title\":\"1. 配置路由信息\",\"slug\":\"_1-配置路由信息\",\"link\":\"#_1-配置路由信息\",\"children\":[]},{\"level\":3,\"title\":\"2. Vue 中加载 vue-router 和路由信息\",\"slug\":\"_2-vue-中加载-vue-router-和路由信息\",\"link\":\"#_2-vue-中加载-vue-router-和路由信息\",\"children\":[]},{\"level\":3,\"title\":\"3. <router-view>使用\",\"slug\":\"_3-router-view-使用\",\"link\":\"#_3-router-view-使用\",\"children\":[]},{\"level\":3,\"title\":\"4. <router-link>使用\",\"slug\":\"_4-router-link-使用\",\"link\":\"#_4-router-link-使用\",\"children\":[]},{\"level\":3,\"title\":\"5. 使用 watch 监控路由变化\",\"slug\":\"_5-使用-watch-监控路由变化\",\"link\":\"#_5-使用-watch-监控路由变化\",\"children\":[]},{\"level\":3,\"title\":\"6. 路由跳转\",\"slug\":\"_6-路由跳转\",\"link\":\"#_6-路由跳转\",\"children\":[]}]},{\"level\":2,\"title\":\"给路由添加鉴权\",\"slug\":\"给路由添加鉴权\",\"link\":\"#给路由添加鉴权\",\"children\":[{\"level\":3,\"title\":\"1. 设置简单的全局数据\",\"slug\":\"_1-设置简单的全局数据\",\"link\":\"#_1-设置简单的全局数据\",\"children\":[]},{\"level\":3,\"title\":\"2. 登录页面登录\",\"slug\":\"_2-登录页面登录\",\"link\":\"#_2-登录页面登录\",\"children\":[]},{\"level\":3,\"title\":\"3. 鉴权进入内页\",\"slug\":\"_3-鉴权进入内页\",\"link\":\"#_3-鉴权进入内页\",\"children\":[]}]}],\"git\":{\"updatedTime\":1564219474000,\"contributors\":[{\"name\":\"godbasin\",\"email\":\"wangbeishan@163.com\",\"commits\":1}]},\"filePathRelative\":\"vue/vue-for-everyone/vue-for-everyone-3.md\"}")
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}

@@ -1,0 +1,180 @@
+<template><div><p>一般来说，我们在遇到对顺序要求严格的任务执行时，就需要维护一个任务管理器，保证任务的执行顺序。前端开发过程中，设计队列/栈的场景比较多，而需要用到任务管理器的场景偏少，本文主要介绍如何实现一个任务管理器。</p>
+<!--more-->
+<p>理解任务管理器比较好的场景大概是协同文档编辑的场景，比如 Google Docs、腾讯文档、Sketch 协同等。我们在进行协同编辑的时候，对版本和消息时序有比较严格的要求，因此常常需要维护一个任务管理器来管理版本相关的任务。</p>
+<p>以上是一些科普知识，用于辅助大家理解接下来的任务管理器设计，下面我们来进入正文。</p>
+<h2 id="单个任务的设计" tabindex="-1"><a class="header-anchor" href="#单个任务的设计" aria-hidden="true">#</a> 单个任务的设计</h2>
+<p>对于单个任务的设计，主要考虑任务的执行。一个任务的作用就是用来运行的，那么对于任务来说，可能会有几个状态：待执行、正在执行、执行失败、执行成功等：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">enum</span> <span class="token constant">TASK_STATUS</span> <span class="token punctuation">{</span>
+  <span class="token constant">INIT</span> <span class="token operator">=</span> <span class="token string">"INIT"</span><span class="token punctuation">,</span> <span class="token comment">// 初始状态</span>
+  <span class="token constant">READY</span> <span class="token operator">=</span> <span class="token string">"READY"</span><span class="token punctuation">,</span> <span class="token comment">// 可执行</span>
+  <span class="token constant">RUNNING</span> <span class="token operator">=</span> <span class="token string">"RUNNING"</span><span class="token punctuation">,</span> <span class="token comment">// 执行中</span>
+  <span class="token constant">SUCCESS</span> <span class="token operator">=</span> <span class="token string">"SUCCESS"</span><span class="token punctuation">,</span> <span class="token comment">// 执行成功</span>
+  <span class="token constant">FAILED</span> <span class="token operator">=</span> <span class="token string">"FAILED"</span><span class="token punctuation">,</span> <span class="token comment">// 执行失败</span>
+  <span class="token constant">DESTROY</span> <span class="token operator">=</span> <span class="token string">"DESTROY"</span><span class="token punctuation">,</span> <span class="token comment">// 已销毁</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="生命周期" tabindex="-1"><a class="header-anchor" href="#生命周期" aria-hidden="true">#</a> 生命周期</h3>
+<p>既然涉及到任务的各个状态，我们也可以赋予任务一些生命周期。这里我们举一些例子，但最终的生命周期设计应该要和自己业务实际情况结合。</p>
+<p><strong>onReady: 任务执行前准备工作</strong></p>
+<p>在每个任务执行之前，我们都需要再次确认下这个任务的状态（是否已经失效），也可能需要做些准备工作，这个阶段可以命名为<code v-pre>onReady</code>：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">ICommonTask</span> <span class="token punctuation">{</span>
+  <span class="token function">onReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token builtin">boolean</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>可以看到，该生命周期以返回 Promise 的方式来运行，该 Promise 包括一个布尔值，用于判断任务是否继续执行。比如我们需要在执行任务之前，从服务端获取一些数据，那么可以这么实现：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">ATask</span> <span class="token keyword">implements</span> <span class="token class-name">ICommonTask</span> <span class="token punctuation">{</span>
+  <span class="token keyword">async</span> <span class="token function">onReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">getSomeDate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span>isSuccess<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>onRun: 任务执行中</strong></p>
+<p>任务准备工作完成之后，任务就需要开始真正运行了。同样的，我们将这个阶段命名为<code v-pre>onRun</code>：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">ICommonTask</span> <span class="token punctuation">{</span>
+  <span class="token function">onReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token builtin">boolean</span><span class="token operator">></span><span class="token punctuation">;</span>
+  <span class="token function">onRun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span>CommonTask<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">|</span> <span class="token keyword">void</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>这里我们看到，<code v-pre>onRun</code>阶段执行同样返回一个 Promise，但 Promise 内容和<code v-pre>onReady</code>阶段不一致，它可能返回一个或者多个<code v-pre>CommonTask</code>组成的数组。这是因为一个任务执行的过程中，可能会产生新的任务，也可能由于其他条件限制，导致它需要创建一个别的任务先执行完毕，才能继续执行自己原本的任务。比如，B 任务在执行的时候，如果条件不满足，则需要先执行一个 A 任务：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">BTask</span> <span class="token keyword">implements</span> <span class="token class-name">ICommonTask</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 其他省略</span>
+  <span class="token keyword">async</span> <span class="token function">onRun</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>needATask<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token punctuation">[</span><span class="token keyword">new</span> <span class="token class-name">ATask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">resetTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 其他正常执行任务逻辑</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p><strong>onDestroy: 任务执行完毕，即将销毁</strong></p>
+<p>很多时候我们实现一些模块功能，都会产生一些临时变量，也可能有一些事件绑定、DOM 元素需要在该模块注销的时候清除，因此进行主动的销毁和清理是一个很好的习惯。对于一个任务的执行来说也是一样的，我们将这个阶段命名为<code v-pre>onDestroy</code>：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">ICommonTask</span> <span class="token punctuation">{</span>
+  <span class="token function">onReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token builtin">boolean</span><span class="token operator">></span><span class="token punctuation">;</span>
+  <span class="token function">onRun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span>CommonTask<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">|</span> <span class="token keyword">void</span><span class="token operator">></span><span class="token punctuation">;</span>
+  <span class="token function">onDestroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>对于任务的生命周期相关，我们暂时讲到这里，接下来我们来看任务的执行。</p>
+<h3 id="任务执行" tabindex="-1"><a class="header-anchor" href="#任务执行" aria-hidden="true">#</a> 任务执行</h3>
+<p>由于每个任务都会有状态、生命周期、执行功能、重置功能，我们可以实现一个通用的任务：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">CommonTask</span> <span class="token keyword">implements</span> <span class="token class-name">ICommonTask</span> <span class="token punctuation">{</span>
+  <span class="token doc-comment comment">/** 生命周期钩子 **/</span>
+  <span class="token keyword">abstract</span> <span class="token function-variable function">onReady</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token builtin">boolean</span><span class="token operator">></span><span class="token punctuation">;</span>
+  <span class="token keyword">abstract</span> <span class="token function-variable function">onRun</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span>CommonTask<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">|</span> <span class="token keyword">void</span><span class="token operator">></span><span class="token punctuation">;</span>
+  <span class="token keyword">abstract</span> <span class="token function-variable function">onDestroy</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">></span><span class="token punctuation">;</span>
+
+  <span class="token doc-comment comment">/** 执行任务 **/</span>
+  <span class="token keyword">public</span> <span class="token keyword">async</span> <span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">Promise</span><span class="token operator">&lt;</span>CommonTask<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">|</span> <span class="token keyword">void</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token comment">// step 1 准备任务</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span><span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">onReady</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 任务准备校验不通过，直接没必要执行了</span>
+      <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">onDestroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// step 2 执行任务</span>
+    <span class="token keyword">const</span> runResult <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">onRun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>runResult<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 若分裂出新的任务，返回并不再继续执行了</span>
+      <span class="token keyword">return</span> runResult<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// step 3 销毁任务</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">onDestroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>这里 CommonTask 提供了一个通用的<code v-pre>execute</code>方法用于执行任务，我们能看到其中的实现也是根据生命周期依次执行。当然，这里其实还需要在执行到对应生命周期的时候，扭转任务状态。除此之外，任务执行异常的处理也并不在这里，因此外界需要进行<code v-pre>try catch</code>处理。</p>
+<p>那么到底在哪里需要进行异常处理呢？我们接下来看看任务管理器。</p>
+<h2 id="任务管理器" tabindex="-1"><a class="header-anchor" href="#任务管理器" aria-hidden="true">#</a> 任务管理器</h2>
+<p>显然，任务管理器的职责主要是保证任务队列中的任务有序、顺利地执行，其中会包括任务执行时的异常处理。除此之外，任务管理器还需要对外提供添加任务，以及暂停、恢复、停止这样的能力。</p>
+<h3 id="任务管理器状态" tabindex="-1"><a class="header-anchor" href="#任务管理器状态" aria-hidden="true">#</a> 任务管理器状态</h3>
+<p>既然任务管理器有对任务的管理，当然它也需要维护自身的状态，例如：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">enum</span> <span class="token constant">QUEUE_STATUS</span> <span class="token punctuation">{</span>
+  <span class="token constant">WORKING</span> <span class="token operator">=</span> <span class="token string">"WORKING"</span><span class="token punctuation">,</span> <span class="token comment">// 工作中</span>
+  <span class="token constant">PAUSE</span> <span class="token operator">=</span> <span class="token string">"PAUSE"</span><span class="token punctuation">,</span> <span class="token comment">// 暂停</span>
+  <span class="token constant">IDLE</span> <span class="token operator">=</span> <span class="token string">"IDLE"</span><span class="token punctuation">,</span> <span class="token comment">// 空闲</span>
+  <span class="token constant">SHUTDOWN</span> <span class="token operator">=</span> <span class="token string">"SHUTDOWN"</span><span class="token punctuation">,</span> <span class="token comment">// 关停</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>这些是任务管理器基本的状态，包括空闲状态、工作中、暂停、停止等。对于每一个不同的状态来说，相应的任务管理器也会有一些更新状态的方法：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">TaskManager</span> <span class="token punctuation">{</span>
+  status<span class="token operator">:</span> <span class="token constant">QUEUE_STATUS</span> <span class="token operator">=</span> <span class="token constant">QUEUE_STATUS</span><span class="token punctuation">.</span><span class="token constant">IDLE</span><span class="token punctuation">;</span>
+  <span class="token comment">// 暂停任务管理器</span>
+  <span class="token keyword">public</span> <span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">QUEUE_STATUS</span><span class="token punctuation">.</span><span class="token constant">PAUSE</span><span class="token punctuation">;</span>
+    <span class="token comment">// 当前正在运行的任务需要处理</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 恢复任务管理器</span>
+  <span class="token keyword">public</span> <span class="token function">resume</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 如果被关停了，则不能恢复啦</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>isShutDown<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">QUEUE_STATUS</span><span class="token punctuation">.</span><span class="token constant">WORKING</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">work</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 关停任务管理器</span>
+  <span class="token keyword">public</span> <span class="token function">resume</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">QUEUE_STATUS</span><span class="token punctuation">.</span><span class="token constant">SHUTDOWN</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 任务管理器工作</span>
+  <span class="token keyword">private</span> <span class="token function">work</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isWorking <span class="token operator">&amp;&amp;</span> hasNextTask<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 如果有会继续执行下一个任务</span>
+      <span class="token comment">// 直到任务管理器被暂停、或者任务队列为空</span>
+      <span class="token function">runNextTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>这里面比较关键的点有两个：</p>
+<ol>
+<li>暂停任务管理器的时候，需要考虑如何处理正在运行的任务。</li>
+<li>执行任务的时候，需要进行一些异常处理。同时，任务的运行可能会进行分裂并产生新的任务，需要对新任务进行处理。</li>
+</ol>
+<h3 id="暂停与恢复" tabindex="-1"><a class="header-anchor" href="#暂停与恢复" aria-hidden="true">#</a> 暂停与恢复</h3>
+<p>我们先来看第一点：任务管理器暂停和恢复时的处理。</p>
+<p>一个简单粗暴的处理方式是，将当前正在运行的任务继续运行完成。但这种处理方式，与我们对于暂停的理解有一些误差。因此，我们可以考虑让任务本身支持重置的功能，比如运行过程中判断任务状态是否需要继续执行，结合销毁当前任务、并将原有任务进行重置。</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">CommonTask</span> <span class="token punctuation">{</span>
+  <span class="token doc-comment comment">/** 重置任务 **/</span>
+  <span class="token comment">// 会返回任务本身，该任务应该是被重置过的最初状态</span>
+  <span class="token keyword">abstract</span> <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> CommonTask<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>实现起来其实也不会很难：</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">ATask</span> <span class="token keyword">extends</span> <span class="token class-name">CommonTask</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 销毁当前任务</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 并返回一个重置后的新任务</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ATask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>对于任务管理器来说，要做的事情也比较简单了：暂停任务管理器的时候，将当前任务重置、并扔回任务队列的头部。</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">TaskManager</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 暂停任务管理器</span>
+  <span class="token keyword">public</span> <span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">QUEUE_STATUS</span><span class="token punctuation">.</span><span class="token constant">PAUSE</span><span class="token punctuation">;</span>
+    <span class="token comment">// 将当前任务重置，并扔回任务队列头部</span>
+    taskList<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span>currentTask<span class="token punctuation">.</span><span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h3 id="任务管理器工作" tabindex="-1"><a class="header-anchor" href="#任务管理器工作" aria-hidden="true">#</a> 任务管理器工作</h3>
+<p>任务管理器工作的时候，主要工作内容包括依次运行任务、处理任务异常、处理任务运行后分裂产生的新任务。</p>
+<div class="language-typescript line-numbers-mode" data-ext="ts"><pre v-pre class="language-typescript"><code><span class="token keyword">class</span> <span class="token class-name">TaskManager</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 任务管理器工作</span>
+  <span class="token keyword">private</span> <span class="token keyword">async</span> <span class="token function">work</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isWorking <span class="token operator">&amp;&amp;</span> hasNextTask<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 如果满足条件，会继续执行下一个任务</span>
+      currentTask <span class="token operator">=</span> <span class="token function">getNextTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">const</span> resultTask <span class="token operator">=</span> <span class="token keyword">await</span> currentTask<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+        <span class="token comment">// 异常处理</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token comment">// 判断是否有分裂的新任务</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>resultTask<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 如果有，就塞回到任务队列的头部，需要优先处理</span>
+        taskList<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span>resultTask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token comment">// 继续执行下一个任务</span>
+      <span class="token function">checkContinueWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>以上大概是我们在设计一个任务管理器的过程中，需要进行思考的一些问题、和简单的实现方式。除此之外，在一个更加复杂的应用场景下，我们还可能会遇到多个任务队列的管理和资源调度、同步任务和异步任务的管理、任务支持优先级设置等各式各样的功能设计。</p>
+<h2 id="结束语" tabindex="-1"><a class="header-anchor" href="#结束语" aria-hidden="true">#</a> 结束语</h2>
+<p>任务管理也好、队列/堆栈的设计也好，都会在工程中经常遇到。而随着应用场景的不一样，我们的设计并不能简单地进行复用，每一次都可以结合业务本身、工程本身而设计出更加合适的调整，每一次我们也都可以给自己提出不一样的要求。</p>
+</div></template>
+
+

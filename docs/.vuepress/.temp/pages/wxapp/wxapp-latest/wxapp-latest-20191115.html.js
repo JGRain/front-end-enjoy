@@ -1,0 +1,14 @@
+export const data = JSON.parse("{\"key\":\"v-194dc7ee\",\"path\":\"/wxapp/wxapp-latest/wxapp-latest-20191115.html\",\"title\":\"小程序开发月刊第11期（20191115）\",\"lang\":\"en-US\",\"frontmatter\":{\"title\":\"小程序开发月刊第11期（20191115）\"},\"headers\":[{\"level\":2,\"title\":\"小程序能力\",\"slug\":\"小程序能力\",\"link\":\"#小程序能力\",\"children\":[{\"level\":3,\"title\":\"小程序·服务商订阅消息设置接口上线\",\"slug\":\"小程序·服务商订阅消息设置接口上线\",\"link\":\"#小程序·服务商订阅消息设置接口上线\",\"children\":[]},{\"level\":3,\"title\":\"同层渲染进度同步\",\"slug\":\"同层渲染进度同步\",\"link\":\"#同层渲染进度同步\",\"children\":[]},{\"level\":3,\"title\":\"小程序实时日志功能更新\",\"slug\":\"小程序实时日志功能更新\",\"link\":\"#小程序实时日志功能更新\",\"children\":[]},{\"level\":3,\"title\":\"OCR 能力更新\",\"slug\":\"ocr-能力更新\",\"link\":\"#ocr-能力更新\",\"children\":[]},{\"level\":3,\"title\":\"更新日志\",\"slug\":\"更新日志\",\"link\":\"#更新日志\",\"children\":[]}]},{\"level\":2,\"title\":\"小程序·云开发\",\"slug\":\"小程序·云开发\",\"link\":\"#小程序·云开发\",\"children\":[{\"level\":3,\"title\":\"小程序·云开发新增高级日志服务\",\"slug\":\"小程序·云开发新增高级日志服务\",\"link\":\"#小程序·云开发新增高级日志服务\",\"children\":[]},{\"level\":3,\"title\":\"云开发代金券\",\"slug\":\"云开发代金券\",\"link\":\"#云开发代金券\",\"children\":[]},{\"level\":3,\"title\":\"云函数优化\",\"slug\":\"云函数优化\",\"link\":\"#云函数优化\",\"children\":[]}]},{\"level\":2,\"title\":\"开发者工具\",\"slug\":\"开发者工具\",\"link\":\"#开发者工具\",\"children\":[{\"level\":3,\"title\":\"微信开发者工具新增文档搜索功能\",\"slug\":\"微信开发者工具新增文档搜索功能\",\"link\":\"#微信开发者工具新增文档搜索功能\",\"children\":[]},{\"level\":3,\"title\":\"更多更新说明\",\"slug\":\"更多更新说明\",\"link\":\"#更多更新说明\",\"children\":[]}]},{\"level\":2,\"title\":\"社区精选文章\",\"slug\":\"社区精选文章\",\"link\":\"#社区精选文章\",\"children\":[]},{\"level\":2,\"title\":\"最新踩坑 && Tips\",\"slug\":\"最新踩坑-tips\",\"link\":\"#最新踩坑-tips\",\"children\":[{\"level\":3,\"title\":\"【同步踩坑信息】- 安卓7.0.8内测版本白屏问题\",\"slug\":\"【同步踩坑信息】-安卓7-0-8内测版本白屏问题\",\"link\":\"#【同步踩坑信息】-安卓7-0-8内测版本白屏问题\",\"children\":[]},{\"level\":3,\"title\":\"【同步踩坑信息】- 安卓wx.getStorage\",\"slug\":\"【同步踩坑信息】-安卓wx-getstorage\",\"link\":\"#【同步踩坑信息】-安卓wx-getstorage\",\"children\":[]},{\"level\":3,\"title\":\"【同步踩坑信息】- 小程序换行会导致多余空格\",\"slug\":\"【同步踩坑信息】-小程序换行会导致多余空格\",\"link\":\"#【同步踩坑信息】-小程序换行会导致多余空格\",\"children\":[]},{\"level\":3,\"title\":\"【同步收集信息】- 首页逻辑\",\"slug\":\"【同步收集信息】-首页逻辑\",\"link\":\"#【同步收集信息】-首页逻辑\",\"children\":[]}]},{\"level\":2,\"title\":\"结束语\",\"slug\":\"结束语\",\"link\":\"#结束语\",\"children\":[]}],\"git\":{\"updatedTime\":1576294487000,\"contributors\":[{\"name\":\"godbasin\",\"email\":\"wangbeishan@163.com\",\"commits\":1}]},\"filePathRelative\":\"wxapp/wxapp-latest/wxapp-latest-20191115.md\"}")
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}

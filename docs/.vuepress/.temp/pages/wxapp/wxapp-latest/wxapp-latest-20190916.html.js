@@ -1,0 +1,14 @@
+export const data = JSON.parse("{\"key\":\"v-c05a26c2\",\"path\":\"/wxapp/wxapp-latest/wxapp-latest-20190916.html\",\"title\":\"小程序开发月刊第九期（20190916）\",\"lang\":\"en-US\",\"frontmatter\":{\"title\":\"小程序开发月刊第九期（20190916）\"},\"headers\":[{\"level\":2,\"title\":\"小程序能力\",\"slug\":\"小程序能力\",\"link\":\"#小程序能力\",\"children\":[{\"level\":3,\"title\":\"「微信官方文档」支持移动端搜索\",\"slug\":\"「微信官方文档」支持移动端搜索\",\"link\":\"#「微信官方文档」支持移动端搜索\",\"children\":[]},{\"level\":3,\"title\":\"微信小程序自动化框架 Python 版 -- Minium 公测\",\"slug\":\"微信小程序自动化框架-python-版-minium-公测\",\"link\":\"#微信小程序自动化框架-python-版-minium-公测\",\"children\":[]},{\"level\":3,\"title\":\"小程序扩展能力更新\",\"slug\":\"小程序扩展能力更新\",\"link\":\"#小程序扩展能力更新\",\"children\":[]},{\"level\":3,\"title\":\"小程序新 Canvas 接口公测\",\"slug\":\"小程序新-canvas-接口公测\",\"link\":\"#小程序新-canvas-接口公测\",\"children\":[]},{\"level\":3,\"title\":\"小程序新增“实时日志”功能\",\"slug\":\"小程序新增-实时日志-功能\",\"link\":\"#小程序新增-实时日志-功能\",\"children\":[]},{\"level\":3,\"title\":\"数据周期更新功能\",\"slug\":\"数据周期更新功能\",\"link\":\"#数据周期更新功能\",\"children\":[]},{\"level\":3,\"title\":\"更新日志\",\"slug\":\"更新日志\",\"link\":\"#更新日志\",\"children\":[]}]},{\"level\":2,\"title\":\"小程序·云开发\",\"slug\":\"小程序·云开发\",\"link\":\"#小程序·云开发\",\"children\":[{\"level\":3,\"title\":\"小程序·云开发新增实时数据推送能力\",\"slug\":\"小程序·云开发新增实时数据推送能力\",\"link\":\"#小程序·云开发新增实时数据推送能力\",\"children\":[]},{\"level\":3,\"title\":\"「小程序·云开发」资源配额调整\",\"slug\":\"「小程序·云开发」资源配额调整\",\"link\":\"#「小程序·云开发」资源配额调整\",\"children\":[]}]},{\"level\":2,\"title\":\"开发者工具\",\"slug\":\"开发者工具\",\"link\":\"#开发者工具\",\"children\":[{\"level\":3,\"title\":\"本地编译时进行合并编译\",\"slug\":\"本地编译时进行合并编译\",\"link\":\"#本地编译时进行合并编译\",\"children\":[]},{\"level\":3,\"title\":\"PC 微信开发版小程序自动预览\",\"slug\":\"pc-微信开发版小程序自动预览\",\"link\":\"#pc-微信开发版小程序自动预览\",\"children\":[]},{\"level\":3,\"title\":\"更多新增能力\",\"slug\":\"更多新增能力\",\"link\":\"#更多新增能力\",\"children\":[]}]},{\"level\":2,\"title\":\"社区精选文章\",\"slug\":\"社区精选文章\",\"link\":\"#社区精选文章\",\"children\":[]},{\"level\":2,\"title\":\"最新踩坑 && Tips\",\"slug\":\"最新踩坑-tips\",\"link\":\"#最新踩坑-tips\",\"children\":[{\"level\":3,\"title\":\"【开发Tips】-小程序插件最低可用版本设置\",\"slug\":\"【开发tips】-小程序插件最低可用版本设置\",\"link\":\"#【开发tips】-小程序插件最低可用版本设置\",\"children\":[]},{\"level\":3,\"title\":\"【踩坑信息】- 小程序公众号关联策略\",\"slug\":\"【踩坑信息】-小程序公众号关联策略\",\"link\":\"#【踩坑信息】-小程序公众号关联策略\",\"children\":[]}]},{\"level\":2,\"title\":\"结束语\",\"slug\":\"结束语\",\"link\":\"#结束语\",\"children\":[]}],\"git\":{\"updatedTime\":1576294487000,\"contributors\":[{\"name\":\"godbasin\",\"email\":\"wangbeishan@163.com\",\"commits\":1}]},\"filePathRelative\":\"wxapp/wxapp-latest/wxapp-latest-20190916.md\"}")
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}

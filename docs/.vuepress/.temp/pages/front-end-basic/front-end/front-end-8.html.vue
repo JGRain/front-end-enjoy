@@ -1,0 +1,227 @@
+<template><div><p>《前端入门》系列主要为个人对前端一些经验和认识总结。本节主要涉及 HTTP 协议和 Ajax 请求，日常开发的联调等内容。</p>
+<!--more-->
+<h1 id="ajax-请求" tabindex="-1"><a class="header-anchor" href="#ajax-请求" aria-hidden="true">#</a> Ajax 请求</h1>
+<p>Ajax 不是 JavaScript 的规范，它只是 Jesse James Garrett 提出的新术语：<code v-pre>Asynchronous JavaScript and XML</code>，意思是用 JavaScript 执行异步网络请求。</p>
+<h2 id="网络请求的发展" tabindex="-1"><a class="header-anchor" href="#网络请求的发展" aria-hidden="true">#</a> 网络请求的发展</h2>
+<p>网络请求，是用来从服务端获取需要的信息，然后解析协议和内容，来进行页面渲染或者是信息获取的过程。前面<RouterLink to="/front-end-basic/front-end/front-end-6.html">《6. 认识浏览器》</RouterLink>一节已经大致说过关于浏览器渲染，以及完整的 HTTP 请求流程。</p>
+<p>在很久以前，我们的网络请求除了静态资源（<code v-pre>html/css/js</code>等）文件的获取，主要用于表单的提交。我们在完成表单内容的填写之后，点击<code v-pre>Submit</code>按钮，表单开始提交，浏览器就会刷新页面，然后在新页面里告诉你操作是成功了还是失败了。</p>
+<p>然后随着时间发展，大家觉得这样每次都刷新页面的体验太糟了，然后开始使用<code v-pre>XMLHttpRequest</code>来获取请求内容，再更新到页面中。页面开始支持局部更新、动态加载，后面还有懒加载、首屏加载等等，其实都可以算是基于这个基础吧。</p>
+<p>同步请求会阻塞进程，页面呈现假死状态，导致体验效果也较差。接下来，Ajax 的应用越来越广，慢慢大家都开始使用异步请求 + 回调的方式，来进行请求处理。那是一个浏览器兼容困难时期，jQuery 封装的<code v-pre>$.ajax()</code>，由于兼容性处理较好，也开始被大家广泛使用
+。</p>
+<p>现在，我们用上了路由管理，编写单页应用，Ajax 已经是一个不可或缺的功能了。</p>
+<p>我们先来认识下 Ajax 的核心：<code v-pre>XMLHttpRequest</code> API 。</p>
+<h2 id="xmlhttprequest" tabindex="-1"><a class="header-anchor" href="#xmlhttprequest" aria-hidden="true">#</a> XMLHttpRequest</h2>
+<p><code v-pre>XMLHttpRequest</code>让发送一个 HTTP 请求变得非常容易。你只需要简单的创建一个请求对象实例，打开一个 URL，然后发送这个请求。当传输完毕后，结果的 HTTP 状态以及返回的响应内容也可以从请求对象中获取。</p>
+<p>来看个简单的例子（我们常用的 Ajax 处理）：</p>
+<div class="language-javascript line-numbers-mode" data-ext="js"><pre v-pre class="language-javascript"><code><span class="token keyword">var</span> request <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 新建XMLHttpRequest对象</span>
+
+request<span class="token punctuation">.</span><span class="token function-variable function">onreadystatechange</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 状态发生变化时，函数被回调</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>readyState <span class="token operator">==</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 成功完成</span>
+    <span class="token comment">// 判断响应结果:</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span>status <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 成功，通过responseText拿到响应的文本</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span>responseText<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 失败，根据响应码判断失败原因:</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span>status<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 发送请求</span>
+<span class="token comment">// open的参数：</span>
+<span class="token comment">// 一：请求方法，包括get/post等</span>
+<span class="token comment">// 二：请求地址</span>
+<span class="token comment">// 三：表示是否异步请求，若为false则是同步请求，会阻塞进程</span>
+request<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"GET"</span><span class="token punctuation">,</span> <span class="token string">"/api/categories"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+request<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>大概就是上面这样，来处理一个 HTTP 请求。我们通常会将它封装成一个通用的方法，方便调用。上面例子中使用<code v-pre>200</code>来判断是否成功，但有些时候<code v-pre>200-400</code>（不包括<code v-pre>400</code>）的范围，都可以算是成功的。</p>
+<p>如果说我们将其封装起来，同时使用 ES6 的 Promise 的方式来操作的话，大概会是这样：</p>
+<div class="language-javascript line-numbers-mode" data-ext="js"><pre v-pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> method<span class="token punctuation">,</span> url<span class="token punctuation">,</span> params<span class="token punctuation">,</span> contentType <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> formData <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FormData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>params<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">key</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    formData<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> params<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span>method<span class="token punctuation">,</span> url<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      xhr<span class="token punctuation">.</span><span class="token function">setRequestHeader</span><span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> contentType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      xhr<span class="token punctuation">.</span><span class="token function-variable function">onreadystatechange</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>readyState <span class="token operator">===</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>status <span class="token operator">>=</span> <span class="token number">200</span> <span class="token operator">&amp;&amp;</span> xhr<span class="token punctuation">.</span>status <span class="token operator">&lt;</span> <span class="token number">400</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 这里我们使用200-400来判断</span>
+            <span class="token function">resolve</span><span class="token punctuation">(</span>xhr<span class="token punctuation">.</span>responseText<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 返回请求信息</span>
+            <span class="token function">reject</span><span class="token punctuation">(</span>xhr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">;</span>
+      xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span>formData<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>这里使用了<code v-pre>FormData</code>来处理。通过<code v-pre>FormData</code>对象可以组装一组用<code v-pre>XMLHttpRequest</code>发送请求的键/值对。<br>
+它可以更灵活方便的发送表单数据，因为可以独立于表单使用。如果你把表单的编码类型设置为<code v-pre>multipart/form-data</code>，则通过<code v-pre>FormData</code>传输的数据格式和表单通过<code v-pre>submit()</code>方法传输的数据格式相同。也支持文件的上传和添加。</p>
+<p>上面的代码也只是一个简单的例子，如果要封装成完善的库，我们通常还需要处理一些问题：</p>
+<ul>
+<li>浏览器兼容性</li>
+<li>babel polyfill 处理 ES6</li>
+<li>get 方法通过将 params 转换拼接 URL 处理</li>
+</ul>
+<p>如果想知道不使用<code v-pre>FormData</code>对象的情况下，通过 AJAX 序列化和提交表单，以及更多的<code v-pre>XMLHttpRequest</code>内容，可以参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest" target="_blank" rel="noopener noreferrer">Using XMLHttpRequest | MDN<ExternalLinkIcon/></a>。</p>
+<h1 id="http-协议" tabindex="-1"><a class="header-anchor" href="#http-协议" aria-hidden="true">#</a> HTTP 协议</h1>
+<p>关于 HTTP 协议的内容，实在是太多太多，这里只大致讲一下接触比较多的。</p>
+<p>更多与 HTTP 协议相关的详细说明，可参考<RouterLink to="/front-end-basic/front-end/front-end-10.html">《10. 理解 HTTP 协议》</RouterLink>。</p>
+<p>还有 TCP/IP 协议的就直接略过，可参考下<RouterLink to="/front-end-basic/front-end/front-end-9.html">《9. 网络协议基础》</RouterLink>。</p>
+<h2 id="理解-http-协议" tabindex="-1"><a class="header-anchor" href="#理解-http-协议" aria-hidden="true">#</a> 理解 HTTP 协议</h2>
+<h3 id="http-结构" tabindex="-1"><a class="header-anchor" href="#http-结构" aria-hidden="true">#</a> HTTP 结构</h3>
+<h4 id="http-消息的结构" tabindex="-1"><a class="header-anchor" href="#http-消息的结构" aria-hidden="true">#</a> HTTP 消息的结构</h4>
+<ol>
+<li>Request</li>
+</ol>
+<div class="language-cmd line-numbers-mode" data-ext="cmd"><pre v-pre class="language-cmd"><code>------------------
+Request line
+（包括：请求方法、请求的资源、HTTP协议的版本号）
+------------------
+Request header
+（包括：Cache头域、Client头域、Cookie/Login头域、Entity头域、Miscellaneous头域、Transport头域等）
+------------------
+空行
+------------------
+Request body
+------------------
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><ol start="2">
+<li>Response</li>
+</ol>
+<div class="language-cmd line-numbers-mode" data-ext="cmd"><pre v-pre class="language-cmd"><code>------------------
+Response line
+（包括：HTTP协议的版本号、状态码、消息）
+------------------
+Response header
+（包括：Cache头域、Cookie/Login头域、Entity头域、Miscellaneous头域、Transport头域、Location头域等）
+------------------
+空行
+------------------
+Response body
+------------------
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h4 id="状态码" tabindex="-1"><a class="header-anchor" href="#状态码" aria-hidden="true">#</a> 状态码</h4>
+<p>状态码由三位数字组成，第一个数字定义了响应的类别（括号中为常见的状态码）：</p>
+<ul>
+<li>1XX--提示信息：表示请求已被成功接收，继续处理</li>
+<li>2XX--成功：表示请求已被成功接收，理解，接受（200 OK）</li>
+<li>3XX--重定向：要完成请求必须进行更进一步的处理（302 Found 重定向/304 Not Modified 缓存）</li>
+<li>4XX--客户端错误：请求有语法错误或请求无法实现（400 Bad Request 客户端请求与语法错误/403 Forbidden 服务器拒绝提供服务/404 Not Found 请求资源不存在）</li>
+<li>5XX--服务器端错误：服务器未能实现合法的请求（500 Internal Server Error 服务器发生了不可预期的错误）</li>
+</ul>
+<h3 id="无连接的-http" tabindex="-1"><a class="header-anchor" href="#无连接的-http" aria-hidden="true">#</a> 无连接的 HTTP</h3>
+<h4 id="无连接" tabindex="-1"><a class="header-anchor" href="#无连接" aria-hidden="true">#</a> 无连接</h4>
+<p>无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。</p>
+<h4 id="keep-alive" tabindex="-1"><a class="header-anchor" href="#keep-alive" aria-hidden="true">#</a> Keep-Alive</h4>
+<p>Keep-Alive 功能使客户端到服务器端的连接持续有效，当出现对服务器的后继请求时，Keep-Alive 功能避免了建立或者重新建立连接。</p>
+<h3 id="无状态的-http" tabindex="-1"><a class="header-anchor" href="#无状态的-http" aria-hidden="true">#</a> 无状态的 HTTP</h3>
+<p>无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。</p>
+<p>通常我们会根据场景，使用<code v-pre>Cookie</code>、<code v-pre>Token</code>、<code v-pre>Session</code>等方法来记录用户状态，完善上下请求的承接性。</p>
+<h2 id="http-与浏览器缓存" tabindex="-1"><a class="header-anchor" href="#http-与浏览器缓存" aria-hidden="true">#</a> HTTP 与浏览器缓存</h2>
+<p>浏览器会在第一次请求完服务器后得到响应，我们可以在服务器中设置这些响应，从而达到在以后的请求中尽量减少甚至不从服务器获取资源的目的。</p>
+<p>静态资源的缓存能减轻很多流量，如今我们的文件很多都加上了 md5，则缓存的使用越来越广泛。</p>
+<p>浏览器是依靠请求和响应中的的头信息来控制缓存的，主要涉及<code v-pre>Expires</code>与<code v-pre>Cache-Control</code>、<code v-pre>Last-Modified/If-Modified-Since</code>、<code v-pre>ETag/If-None-Match</code>这几个。</p>
+<p>第一次请求：
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/015343_psx2_568818.png" alt="image"></p>
+<p>再次请求：
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/015353_P04w_568818.png" alt="image"></p>
+<h2 id="http-与跨域" tabindex="-1"><a class="header-anchor" href="#http-与跨域" aria-hidden="true">#</a> HTTP 与跨域</h2>
+<h3 id="浏览器同源政策" tabindex="-1"><a class="header-anchor" href="#浏览器同源政策" aria-hidden="true">#</a> 浏览器同源政策</h3>
+<p>同源政策的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。所谓&quot;同源&quot;指的是&quot;三个相同&quot;: 协议相同、域名相同、端口相同。</p>
+<p>随着互联网的发展，&quot;同源政策&quot;越来越严格。目前，如果非同源，共有三种行为受到限制。</p>
+<ol>
+<li><code v-pre>Cookie</code>、<code v-pre>LocalStorage</code>和<code v-pre>IndexDB</code>无法读取。</li>
+<li><code v-pre>DOM</code>无法获得。</li>
+<li><code v-pre>AJAX</code>请求不能发送。</li>
+</ol>
+<h3 id="前端解决跨域" tabindex="-1"><a class="header-anchor" href="#前端解决跨域" aria-hidden="true">#</a> 前端解决跨域</h3>
+<p>跨域方法大概以下几种：</p>
+<ul>
+<li><code v-pre>document.domain + iframe</code>(只有在主域相同的时候才能使用该方法)</li>
+<li>动态创建<code v-pre>script</code>(JSONP)</li>
+<li><code v-pre>location.hash + iframe</code></li>
+<li><code v-pre>window.name + iframe</code></li>
+<li><code v-pre>postMessage</code></li>
+<li>CORS</li>
+<li><code v-pre>websockets</code></li>
+</ul>
+<p>现在的话，应该是 CORS 的使用会更广泛吧。实现 CORS 通信的关键是服务器。只要服务器实现了 CORS 接口，就可以跨源通信。</p>
+<h1 id="请求联调" tabindex="-1"><a class="header-anchor" href="#请求联调" aria-hidden="true">#</a> 请求联调</h1>
+<p>一般来说，我们的日常联调通常有两种：浏览器查看请求，或是工具抓包查看（Fiddler）。</p>
+<h2 id="浏览器查看请求" tabindex="-1"><a class="header-anchor" href="#浏览器查看请求" aria-hidden="true">#</a> 浏览器查看请求</h2>
+<p>我们又来看浏览器的控制台了：<br>
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513065617(1).png" alt="image"></p>
+<h3 id="network-面板" tabindex="-1"><a class="header-anchor" href="#network-面板" aria-hidden="true">#</a> Network 面板</h3>
+<p>Network 面板可以记录页面上的网络请求的详情信息，从发起网页页面请求 Request 后分析 HTTP 请求后得到的各个请求资源信息（包括状态、资源类型、大小、所用时间、Request 和 Response 等），可以根据这个进行网络性能优化。</p>
+<p>该面板主要包括 5 大块窗格，如图：<br>
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/7f5c083982ec4c8378100687072118b9.png" alt="image"></p>
+<ul>
+<li><strong>Controls</strong>：控制 Network 的外观和功能。</li>
+<li><strong>Filters</strong>：控制 Requests Table 具体显示哪些内容。</li>
+<li><strong>Overview</strong>：显示获取到资源的时间轴信息。</li>
+<li><strong>Requests Table</strong>：按资源获取的前后顺序显示所有获取到的资源信息，点击资源名可以查看该资源的详细信息。</li>
+<li><strong>Summary</strong>：显示总的请求数、数据传输量、加载时间信息。</li>
+</ul>
+<h3 id="查看具体资源的详情" tabindex="-1"><a class="header-anchor" href="#查看具体资源的详情" aria-hidden="true">#</a> 查看具体资源的详情</h3>
+<p>通过点击某个资源的 Name 可以查看该资源的详细信息，根据选择的资源类型显示的信息也不太一样，可能包括如下 Tab 信息：</p>
+<ul>
+<li><strong>Headers</strong>：该资源的 HTTP 头信息。</li>
+<li><strong>Preview</strong>：根据你所选择的资源类型（JSON、图片、文本）显示相应的预览。</li>
+<li><strong>Response</strong>：显示 HTTP 的 Response 信息。</li>
+<li><strong>Cookies</strong>：显示资源 HTTP 的 Request 和 Response 过程中的 Cookies 信息。</li>
+<li><strong>Timing</strong>：显示资源在整个请求生命周期过程中各部分花费的时间。</li>
+</ul>
+<p>一般来说，联调主要关注请求是否正确发送、回包是否是约定的格式，所以我们更多使用资源详情的查看，包括：</p>
+<ul>
+<li>查看 HTTP 头信息是否正确</li>
+<li>查看请求数据是否带上</li>
+<li>查看请求是否成功，分析 HTTP 状态码</li>
+<li>查看回包格式和内容是否正确</li>
+</ul>
+<p>而其他功能，或许对于性能优化的时候会使用更多，先不多介绍。<br>
+这里面有一篇文章写得挺详细的，可以参考<a href="http://web.jobbole.com/89106/" target="_blank" rel="noopener noreferrer">《Chrome 开发者工具详解(2)：Network 面板》<ExternalLinkIcon/></a></p>
+<h2 id="fiddler" tabindex="-1"><a class="header-anchor" href="#fiddler" aria-hidden="true">#</a> Fiddler</h2>
+<p>Fiddler 是一个 HTTP 的调试代理，以代理服务器的方式，监听系统的 Http 网络数据流动。Fiddler 可以也可以让你检查所有的 HTTP 通讯，设置断点，以及 Fiddle 所有的“进出”的数据（可用于抓包、修改请求等）。</p>
+<p>通常来说，我们会使用它来解决一些问题：</p>
+<ol>
+<li>查看请求详情（类似上方的浏览器 Network 面板）。</li>
+<li>请求失败时，抓包给后台查看问题。</li>
+<li>模拟请求。</li>
+<li>拦截请求，并更改请求内容。</li>
+<li>移动端的请求查看和抓包。</li>
+</ol>
+<p>具体的使用方式，可以参考<a href="http://www.cnblogs.com/FounderBox/p/4653588.html?utm_source=tuicool" target="_blank" rel="noopener noreferrer">Fiddler 教程<ExternalLinkIcon/></a>。</p>
+<h1 id="其他深入学习" tabindex="-1"><a class="header-anchor" href="#其他深入学习" aria-hidden="true">#</a> 其他深入学习</h1>
+<p>就目前来说，大致的入门内容大概到这，还有很多内容或许分散在本骚年的各个系列博客中。这里放一些总结和整理相关的吧。</p>
+<h2 id="前端阶段性总结" tabindex="-1"><a class="header-anchor" href="#前端阶段性总结" aria-hidden="true">#</a> 前端阶段性总结</h2>
+<blockquote>
+<p><a href="https://godbasin.github.io/2017/05/20/front-end-notes-7-init-http/" target="_blank" rel="noopener noreferrer">《前端阶段性总结之「理解 HTTP 协议」》<ExternalLinkIcon/></a> &gt; <a href="https://godbasin.github.io/2017/05/19/front-end-notes-6-network-protocol/" target="_blank" rel="noopener noreferrer">《前端阶段性总结之「网络协议基础」》<ExternalLinkIcon/></a><br>
+<a href="https://godbasin.github.io/2017/05/14/front-end-notes-5-build-tool/" target="_blank" rel="noopener noreferrer">《前端阶段性总结之「自动化和构建工具」》<ExternalLinkIcon/></a><br>
+<a href="https://godbasin.github.io/2017/05/12/front-end-notes-4-frame/" target="_blank" rel="noopener noreferrer">《前端阶段性总结之「框架相关」》<ExternalLinkIcon/></a><br>
+<a href="https://godbasin.github.io/2017/05/07/front-end-notes-3-javascript-keep-moving/" target="_blank" rel="noopener noreferrer">《前端阶段性总结之「javascript 新特性」》<ExternalLinkIcon/></a><br>
+<a href="https://godbasin.github.io/2017/05/06/front-end-notes-2-deep-into-javascript/" target="_blank" rel="noopener noreferrer">《前端阶段性总结之「深入 javascript」》<ExternalLinkIcon/></a><br>
+<a href="https://godbasin.github.io/2017/05/01/front-end-notes-1-init-javascript/" target="_blank" rel="noopener noreferrer">《前端阶段性总结之「掌握 javascript」》<ExternalLinkIcon/></a><br>
+<a href="https://godbasin.github.io/2017/04/30/front-end-notes-0-about/" target="_blank" rel="noopener noreferrer">《前端阶段性总结之「总览整理」》<ExternalLinkIcon/></a></p>
+</blockquote>
+<h2 id="前端杂谈" tabindex="-1"><a class="header-anchor" href="#前端杂谈" aria-hidden="true">#</a> 前端杂谈</h2>
+<blockquote>
+<p><RouterLink to="/understanding/template-engine.html">《前端模板引擎》</RouterLink><br>
+<RouterLink to="/understanding/dialogue-abstraction.html">《对话抽象》</RouterLink><br>
+<RouterLink to="/understanding/data-driven-or-event-driven.html">《前端思维转变--从事件驱动到数据驱动》</RouterLink><br>
+还有《纯前端的进军》系列，更多可以查看 github 上博客：<a href="https://github.com/godbasin/godbasin.github.io" target="_blank" rel="noopener noreferrer">godbasin/godbasin.github.io<ExternalLinkIcon/></a>。</p>
+</blockquote>
+<h1 id="结束语" tabindex="-1"><a class="header-anchor" href="#结束语" aria-hidden="true">#</a> 结束语</h1>
+<p>这一节主要讲了 HTTP 请求相关，包括 Ajax（XMLHttpRequest）、HTTP 协议/跨域/缓存等，以及常用的前后台交互（联调）方式的介绍。这里面都是书面的介绍，我们需要更多的其实是实践，动手去写吧。</p>
+</div></template>
+
+

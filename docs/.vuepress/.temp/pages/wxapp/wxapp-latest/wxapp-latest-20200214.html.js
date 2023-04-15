@@ -1,0 +1,14 @@
+export const data = JSON.parse("{\"key\":\"v-78de8c1c\",\"path\":\"/wxapp/wxapp-latest/wxapp-latest-20200214.html\",\"title\":\"小程序开发月刊第13期（20200214）\",\"lang\":\"en-US\",\"frontmatter\":{\"title\":\"小程序开发月刊第13期（20200214）\"},\"headers\":[{\"level\":2,\"title\":\"小程序能力\",\"slug\":\"小程序能力\",\"link\":\"#小程序能力\",\"children\":[{\"level\":3,\"title\":\"小程序模板消息开发能力调整说明\",\"slug\":\"小程序模板消息开发能力调整说明\",\"link\":\"#小程序模板消息开发能力调整说明\",\"children\":[]},{\"level\":3,\"title\":\"小程序搜索优化指南(SEO)\",\"slug\":\"小程序搜索优化指南-seo\",\"link\":\"#小程序搜索优化指南-seo\",\"children\":[]},{\"level\":3,\"title\":\"商品数据接入（内测）\",\"slug\":\"商品数据接入-内测\",\"link\":\"#商品数据接入-内测\",\"children\":[]},{\"level\":3,\"title\":\"服务平台新增AI、安全、地图等多项能力\",\"slug\":\"服务平台新增ai、安全、地图等多项能力\",\"link\":\"#服务平台新增ai、安全、地图等多项能力\",\"children\":[]},{\"level\":3,\"title\":\"“小程序助手”性能分析功能升级\",\"slug\":\"小程序助手-性能分析功能升级\",\"link\":\"#小程序助手-性能分析功能升级\",\"children\":[]},{\"level\":3,\"title\":\"微信 Mac 版小程序开发者公测\",\"slug\":\"微信-mac-版小程序开发者公测\",\"link\":\"#微信-mac-版小程序开发者公测\",\"children\":[]}]},{\"level\":2,\"title\":\"小程序·云开发\",\"slug\":\"小程序·云开发\",\"link\":\"#小程序·云开发\",\"children\":[{\"level\":3,\"title\":\"小程序·云开发支持数据库事务\",\"slug\":\"小程序·云开发支持数据库事务\",\"link\":\"#小程序·云开发支持数据库事务\",\"children\":[]},{\"level\":3,\"title\":\"周期性更新/数据预拉取支持从云开发环境中获取数据\",\"slug\":\"周期性更新-数据预拉取支持从云开发环境中获取数据\",\"link\":\"#周期性更新-数据预拉取支持从云开发环境中获取数据\",\"children\":[]},{\"level\":3,\"title\":\"共克时艰，疫情期间，云开发旗舰版免费使用\",\"slug\":\"共克时艰-疫情期间-云开发旗舰版免费使用\",\"link\":\"#共克时艰-疫情期间-云开发旗舰版免费使用\",\"children\":[]}]},{\"level\":2,\"title\":\"开发者工具\",\"slug\":\"开发者工具\",\"link\":\"#开发者工具\",\"children\":[{\"level\":3,\"title\":\"更多更新说明\",\"slug\":\"更多更新说明\",\"link\":\"#更多更新说明\",\"children\":[]}]},{\"level\":2,\"title\":\"社区精选文章\",\"slug\":\"社区精选文章\",\"link\":\"#社区精选文章\",\"children\":[]},{\"level\":2,\"title\":\"最新踩坑 && Tips\",\"slug\":\"最新踩坑-tips\",\"link\":\"#最新踩坑-tips\",\"children\":[{\"level\":3,\"title\":\"【同步踩坑信息】- 插件开发\",\"slug\":\"【同步踩坑信息】-插件开发\",\"link\":\"#【同步踩坑信息】-插件开发\",\"children\":[]},{\"level\":3,\"title\":\"同步踩坑信息】- wx.getLaunchOptionsSync使用\",\"slug\":\"同步踩坑信息】-wx-getlaunchoptionssync使用\",\"link\":\"#同步踩坑信息】-wx-getlaunchoptionssync使用\",\"children\":[]},{\"level\":3,\"title\":\"【小程序踩坑记录】- page.onUnload\",\"slug\":\"【小程序踩坑记录】-page-onunload\",\"link\":\"#【小程序踩坑记录】-page-onunload\",\"children\":[]}]},{\"level\":2,\"title\":\"结束语\",\"slug\":\"结束语\",\"link\":\"#结束语\",\"children\":[]}],\"git\":{\"updatedTime\":1581681976000,\"contributors\":[{\"name\":\"godbasin\",\"email\":\"wangbeishan@163.com\",\"commits\":1}]},\"filePathRelative\":\"wxapp/wxapp-latest/wxapp-latest-20200214.md\"}")
+
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.accept()
+  if (__VUE_HMR_RUNTIME__.updatePageData) {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  }
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(({ data }) => {
+    __VUE_HMR_RUNTIME__.updatePageData(data)
+  })
+}

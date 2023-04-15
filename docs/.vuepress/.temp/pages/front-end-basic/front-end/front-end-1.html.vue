@@ -1,0 +1,56 @@
+<template><div><p>本文先整体介绍一下我所理解的前端状况。</p>
+<!--more-->
+<p>本系列的目的主要是分享一些个人经验和理解，希望能帮到需要的小伙伴们。同时从头开始的整理和思考，或许对于本骚年自己也有一定的帮助。共勉共勉~</p>
+<h1 id="什么是前端" tabindex="-1"><a class="header-anchor" href="#什么是前端" aria-hidden="true">#</a> 什么是前端</h1>
+<h2 id="连接用户的最后一层" tabindex="-1"><a class="header-anchor" href="#连接用户的最后一层" aria-hidden="true">#</a> 连接用户的最后一层</h2>
+<p>说起来，对前端这样的认知方式，大概是当初加入的原因。</p>
+<p>为什么我喜欢称之为连接用户的最后一层呢？因为页面的展示和操作交互，是我们的产品与用户直接对话的一步。
+当然，用户交互的界面很多，除了前端，还有终端、操作系统、等等。</p>
+<p>如果说，想要区分哪些是前端呢？这个要跟我们的浏览器紧紧相关了。</p>
+<h2 id="浏览器带你看遍世界" tabindex="-1"><a class="header-anchor" href="#浏览器带你看遍世界" aria-hidden="true">#</a> 浏览器带你看遍世界</h2>
+<p>浏览器是个伟大的发明（不知道算发明不），把我们的世界从身边的小圈直接扩大到全世界的各个地方。</p>
+<p>以前常说，读书能让我们看到外面的世界。而浏览器的出现，让我们可以接受来自不同国家、不同领域的信息。
+浏览器作为跨电脑、手机的应用，只需要打开浏览器，我们就能找到想要的内容，从文字到图片、视频，甚至是游戏，都可以在其中体验。如今手机的普及，更是常常会有 H5 页面，包括一些简单的活动、抽奖、分享信息等。</p>
+<p>前端是什么呢？最初的前端，就是写浏览器里面的页面的。像我们常说的网站、网页，或者是百度等，都是前端实现的页面。
+最初的时候，前端主要控制页面的展示，和一些样式的调整。随着网络速度和机器能力的提升，页面的交互逻辑逐渐复杂。</p>
+<p>随着前端工程化的一些工具、插件、框架的出现，前端的开发效率逐步提升，同时浏览器的兼容和能力开放增加，前端能做到的事情更多。这里补充一下，前端是通过<code v-pre>HTML/CSS/Javascript</code>来写页面的。而浏览器除了对<code v-pre>HTML/CSS</code>的渲染，还有<code v-pre>Javascript</code>引擎，作为页面的逻辑控制。</p>
+<p>目前为止，或许大部分的前端的工作内容还是基于浏览器，但随着浏览器的内核或者是<code v-pre>Javascript</code>的解析引擎被移植到各个环境，前端的爪子也伸到很多地方。</p>
+<h2 id="前端的位置" tabindex="-1"><a class="header-anchor" href="#前端的位置" aria-hidden="true">#</a> 前端的位置</h2>
+<p>一个完整的产品需要很多道工序，一个应用程序也对应很多层的开发。</p>
+<p>一般来说，一个网页可以为静态页面，即内容和样式都是前端写好的，部署到机器上，添加路由就可访问。
+现在的话，页面大部分是动态生成的，即页面打开后，需要拉取接口获取数据，然后重新更新到页面中。像一些直播弹幕、状态的查询等，常常是前端将后台的数据拉取回来后，渲染到页面。</p>
+<p>浏览器网页的开发组成：<code v-pre>前端 &lt;=&gt; (数据交互) &lt;=&gt; 后台</code>。</p>
+<p>而如果是多终端的数据展示，则后台的数据则需要同时提供给其他地方。</p>
+<p>常见的手机 APP：<code v-pre>用户 &lt;=&gt; 终端/webview嵌H5 &lt;=&gt; (数据交互) &lt;=&gt; 终端后台 &lt;=&gt; 数据库 &lt;=&gt; 管理后台 &lt;=&gt; 管理前端 &lt;=&gt; 运营人员</code>。</p>
+<p>前端页面既可以作为展示，也可以作为管理，可用于分享，也可用于娱乐。产品的难点，多在于创造和创新，前端也只是一种实现方式而已。
+而本骚年更爱的对前端的理解是，身肩负着与用户最亲密的接触，需要把最好的一面呈现给用户。</p>
+<p>如果说我们想要让用户喜欢我们的产品，首先要做的就是要以最完美的形态出现，而前端的工作，就是要完美地控制展示层。</p>
+<h1 id="前端能做什么" tabindex="-1"><a class="header-anchor" href="#前端能做什么" aria-hidden="true">#</a> 前端能做什么</h1>
+<h2 id="纯前端的进击" tabindex="-1"><a class="header-anchor" href="#纯前端的进击" aria-hidden="true">#</a> 纯前端的进击</h2>
+<p>现在，前端可以做的事情很多。</p>
+<h3 id="服务端" tabindex="-1"><a class="header-anchor" href="#服务端" aria-hidden="true">#</a> 服务端</h3>
+<p>在<code v-pre>node.js</code>的强助力之下，前端小伙伴也能管理文件和资源，维护服务进程和数据库了。当然，异步的方式，或许更适合高并发的服务。</p>
+<h3 id="app-开发" tabindex="-1"><a class="header-anchor" href="#app-开发" aria-hidden="true">#</a> App 开发</h3>
+<p>智能手机的普及，开拓了一大片 App 的市场。对终端的尝试，也是近年来前端圈子一直在做的事情。<br>
+有了<code v-pre>react-native</code>、<code v-pre>weex</code>等各种 Native App、Hybrid App 开发框架支持，前端小伙伴们也能偶尔朝终端 APP 插上一脚。</p>
+<h3 id="pc-应用" tabindex="-1"><a class="header-anchor" href="#pc-应用" aria-hidden="true">#</a> PC 应用</h3>
+<p>用<code v-pre>electron</code>这样的框架，将浏览器加一层对接系统 API 的封装，便实现了跨系统的 PC 应用开发。<br>
+网易云音乐的 PC 版便是<code v-pre>electron</code>的产品，而小伙伴们写代码的<code v-pre>VS Code</code>又何尝不是呢。</p>
+<h3 id="无处不在的-h5-页面" tabindex="-1"><a class="header-anchor" href="#无处不在的-h5-页面" aria-hidden="true">#</a> 无处不在的 H5 页面</h3>
+<p>如今智能手机的普及，更是让 H5 出现在各种信息流中。H5 是什么呢，其实就是移动端的网页，主要用于信息分享、简单的功能、小游戏等等，加载和传播速度快的小页面。<br>
+H5 页面主要依赖 App 里的浏览器内核，基本上每个 App 都会支持 H5 页面的。而 HTML5 中<code v-pre>video</code>、<code v-pre>audio</code>、<code v-pre>canvas</code>等新媒体元素，以及 CSS3 中的动画效果，使得用户能在小小的屏幕页面里，获取到各种各样的信息。</p>
+<h3 id="小程序开发" tabindex="-1"><a class="header-anchor" href="#小程序开发" aria-hidden="true">#</a> 小程序开发</h3>
+<p>从微信开始火起来的小程序，到后面的支付宝小程序、头条小程序、百度小程序、QQ 小程序等等，这种 Hybrid APP 的方式如今也找到了一个较友好的方向来进行：官方 APP 提供增强 WebView 的形式，给到开发者参与到 APP 生态中，共同补齐生态建设能力。</p>
+<h3 id="serverless" tabindex="-1"><a class="header-anchor" href="#serverless" aria-hidden="true">#</a> Serverless</h3>
+<p>如今各种云开发的能力在健全和推广，例如微信小程序的云开发能力，也补齐了前端开发对服务端开发和运维中缺失的一环，能真正意义上实现一人完成整个小程序，从设计到开发到上线到运维。</p>
+<h2 id="前端的快速发展" tabindex="-1"><a class="header-anchor" href="#前端的快速发展" aria-hidden="true">#</a> 前端的快速发展</h2>
+<p>前端也有很多的插件或者库的支持，有了<code v-pre>Canvas</code>可以写网页游戏、各种图表插件<code v-pre>Echarts</code>/<code v-pre>d3</code>绘制图表、还有<code v-pre>WebGL</code>的支持、<code v-pre>three.js</code>的封装库来写 3D 动画或是游戏。</p>
+<p>我们也常常看到前端的技术栈不停地更新，样式库<code v-pre>bootstrap</code>，曾经打天下的<code v-pre>jQuery</code>，如今各种框架之争<code v-pre>Vue</code>、<code v-pre>Angular</code>、<code v-pre>React</code>，数据流的处理<code v-pre>Rxjs</code>、用于 API 的查询语言<code v-pre>GraphQL</code>。</p>
+<p>作为一个前端，也会常常担心跟不上时代变更的角度。如今的年轻人也越来越聪明了，带的小弟关注的东西比你逼格高很多。<br>
+但其实也享受这种不断更新的过程，勇于接受挑战，更新和迭代自己，跟随着世界的脚步走。每一步都走稳了，才是最踏实的方式。</p>
+<h2 id="结束语" tabindex="-1"><a class="header-anchor" href="#结束语" aria-hidden="true">#</a> 结束语</h2>
+<p>一直都有想法写这样的系列文章，但不知道怎么下笔。三年前端，学到接触到的东西很多，或许一时半会写不完。<br>
+不过拿起键盘开始敲，也算是一种前进的方式吧。</p>
+</div></template>
+
+

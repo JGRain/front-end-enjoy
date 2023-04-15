@@ -1,0 +1,7 @@
+<template><div><h1 id="前端的进击" tabindex="-1"><a class="header-anchor" href="#前端的进击" aria-hidden="true">#</a> 前端的进击</h1>
+<p>该块内容主要用于纯前端的一次跨端进击，我们需要了解自己的合作伙伴（后台、运维、设计、交互），才能做更好的合作，共同完成美好的作品。</p>
+<p>同时这些内容，也会对要准备面试的你有所帮助噢~</p>
+<p><RouterLink to="/front-end-addon/more-than-single-thread/1-thread-and-progress.html">开始学习 -&gt;</RouterLink></p>
+</div></template>
+
+
