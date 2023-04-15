@@ -11,6 +11,20 @@ export const pagesData = {
   "v-53730b35": () => import(/* webpackChunkName: "v-53730b35" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-front-end/1-learning-database.html.js").then(({ data }) => data),
   // path: /front-end-addon/more-than-front-end/2-sql-and-nosql.html
   "v-5afb48e6": () => import(/* webpackChunkName: "v-5afb48e6" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-front-end/2-sql-and-nosql.html.js").then(({ data }) => data),
+  // path: /front-end-addon/more-than-single-thread/1-thread-and-progress.html
+  "v-4181ae41": () => import(/* webpackChunkName: "v-4181ae41" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/1-thread-and-progress.html.js").then(({ data }) => data),
+  // path: /front-end-addon/more-than-single-thread/2-progress-and-io.html
+  "v-5bcd416a": () => import(/* webpackChunkName: "v-5bcd416a" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/2-progress-and-io.html.js").then(({ data }) => data),
+  // path: /front-end-addon/more-than-single-thread/3-interprocess-communication.html
+  "v-f925a1de": () => import(/* webpackChunkName: "v-f925a1de" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/3-interprocess-communication.html.js").then(({ data }) => data),
+  // path: /front-end-addon/more-than-single-thread/4-network-progress-and-tcp-ip.html
+  "v-2740029a": () => import(/* webpackChunkName: "v-2740029a" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/4-network-progress-and-tcp-ip.html.js").then(({ data }) => data),
+  // path: /front-end-addon/more-than-single-thread/5-http-and-websocket.html
+  "v-051545e3": () => import(/* webpackChunkName: "v-051545e3" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/5-http-and-websocket.html.js").then(({ data }) => data),
+  // path: /front-end-addon/more-than-single-thread/6-socket-and-socket-io.html
+  "v-16cb0400": () => import(/* webpackChunkName: "v-16cb0400" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/6-socket-and-socket-io.html.js").then(({ data }) => data),
+  // path: /front-end-addon/more-than-single-thread/7-node-js.html
+  "v-16378d0d": () => import(/* webpackChunkName: "v-16378d0d" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/7-node-js.html.js").then(({ data }) => data),
   // path: /front-end-addon/simple-algorithm/1-bubble-sort.html
   "v-0b0574f3": () => import(/* webpackChunkName: "v-0b0574f3" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/simple-algorithm/1-bubble-sort.html.js").then(({ data }) => data),
   // path: /front-end-addon/simple-algorithm/2-counting-sort.html
@@ -29,38 +43,6 @@ export const pagesData = {
   "v-43dee49e": () => import(/* webpackChunkName: "v-43dee49e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/simple-algorithm/8-find-maximum-subarray.html.js").then(({ data }) => data),
   // path: /front-end-addon/simple-algorithm/9-n-n-matrix.html
   "v-856a04ae": () => import(/* webpackChunkName: "v-856a04ae" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/simple-algorithm/9-n-n-matrix.html.js").then(({ data }) => data),
-  // path: /front-end-addon/more-than-single-thread/1-thread-and-progress.html
-  "v-4181ae41": () => import(/* webpackChunkName: "v-4181ae41" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/1-thread-and-progress.html.js").then(({ data }) => data),
-  // path: /front-end-addon/more-than-single-thread/2-progress-and-io.html
-  "v-5bcd416a": () => import(/* webpackChunkName: "v-5bcd416a" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/2-progress-and-io.html.js").then(({ data }) => data),
-  // path: /front-end-addon/more-than-single-thread/3-interprocess-communication.html
-  "v-f925a1de": () => import(/* webpackChunkName: "v-f925a1de" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/3-interprocess-communication.html.js").then(({ data }) => data),
-  // path: /front-end-addon/more-than-single-thread/4-network-progress-and-tcp-ip.html
-  "v-2740029a": () => import(/* webpackChunkName: "v-2740029a" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/4-network-progress-and-tcp-ip.html.js").then(({ data }) => data),
-  // path: /front-end-addon/more-than-single-thread/5-http-and-websocket.html
-  "v-051545e3": () => import(/* webpackChunkName: "v-051545e3" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/5-http-and-websocket.html.js").then(({ data }) => data),
-  // path: /front-end-addon/more-than-single-thread/6-socket-and-socket-io.html
-  "v-16cb0400": () => import(/* webpackChunkName: "v-16cb0400" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/6-socket-and-socket-io.html.js").then(({ data }) => data),
-  // path: /front-end-addon/more-than-single-thread/7-node-js.html
-  "v-16378d0d": () => import(/* webpackChunkName: "v-16378d0d" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-addon/more-than-single-thread/7-node-js.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-analyze.html
-  "v-4ce6d0a2": () => import(/* webpackChunkName: "v-4ce6d0a2" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-analyze.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-canvas.html
-  "v-1092019f": () => import(/* webpackChunkName: "v-1092019f" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-canvas.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-container.html
-  "v-8f537dcc": () => import(/* webpackChunkName: "v-8f537dcc" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-container.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-no-responding.html
-  "v-130fde3c": () => import(/* webpackChunkName: "v-130fde3c" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-no-responding.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-optimization-project.html
-  "v-22d6dc5e": () => import(/* webpackChunkName: "v-22d6dc5e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-optimization-project.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-optimization.html
-  "v-6362dc2a": () => import(/* webpackChunkName: "v-6362dc2a" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-optimization.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-render.html
-  "v-1f2d2c21": () => import(/* webpackChunkName: "v-1f2d2c21" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-render.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-ssr.html
-  "v-a31d38ae": () => import(/* webpackChunkName: "v-a31d38ae" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-ssr.html.js").then(({ data }) => data),
-  // path: /front-end-basic/performance/front-end-performance-startup.html
-  "v-5de1491e": () => import(/* webpackChunkName: "v-5de1491e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-startup.html.js").then(({ data }) => data),
   // path: /front-end-basic/deep-learning/build-application.html
   "v-35b02648": () => import(/* webpackChunkName: "v-35b02648" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/deep-learning/build-application.html.js").then(({ data }) => data),
   // path: /front-end-basic/deep-learning/front-end-engineering.html
@@ -87,14 +69,6 @@ export const pagesData = {
   "v-c9726180": () => import(/* webpackChunkName: "v-c9726180" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/deep-learning/vscode-ipc.html.js").then(({ data }) => data),
   // path: /front-end-basic/deep-learning/why-spreadsheet-app-excited.html
   "v-1bd83b31": () => import(/* webpackChunkName: "v-1bd83b31" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/deep-learning/why-spreadsheet-app-excited.html.js").then(({ data }) => data),
-  // path: /front-end-basic/skill/design-and-manage-front-end-project.html
-  "v-2fbcd3e7": () => import(/* webpackChunkName: "v-2fbcd3e7" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/skill/design-and-manage-front-end-project.html.js").then(({ data }) => data),
-  // path: /front-end-basic/skill/front-end-career-planning.html
-  "v-79288c1e": () => import(/* webpackChunkName: "v-79288c1e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/skill/front-end-career-planning.html.js").then(({ data }) => data),
-  // path: /front-end-basic/skill/research-and-design-process.html
-  "v-246cea5f": () => import(/* webpackChunkName: "v-246cea5f" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/skill/research-and-design-process.html.js").then(({ data }) => data),
-  // path: /front-end-basic/skill/why-project-reviews-are-important.html
-  "v-64a1372e": () => import(/* webpackChunkName: "v-64a1372e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/skill/why-project-reviews-are-important.html.js").then(({ data }) => data),
   // path: /front-end-basic/front-end/front-end-1.html
   "v-4d0f8c86": () => import(/* webpackChunkName: "v-4d0f8c86" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/front-end/front-end-1.html.js").then(({ data }) => data),
   // path: /front-end-basic/front-end/front-end-10.html
@@ -115,6 +89,32 @@ export const pagesData = {
   "v-590178df": () => import(/* webpackChunkName: "v-590178df" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/front-end/front-end-8.html.js").then(({ data }) => data),
   // path: /front-end-basic/front-end/front-end-9.html
   "v-5ab6517e": () => import(/* webpackChunkName: "v-5ab6517e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/front-end/front-end-9.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-analyze.html
+  "v-4ce6d0a2": () => import(/* webpackChunkName: "v-4ce6d0a2" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-analyze.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-canvas.html
+  "v-1092019f": () => import(/* webpackChunkName: "v-1092019f" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-canvas.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-container.html
+  "v-8f537dcc": () => import(/* webpackChunkName: "v-8f537dcc" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-container.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-no-responding.html
+  "v-130fde3c": () => import(/* webpackChunkName: "v-130fde3c" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-no-responding.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-optimization-project.html
+  "v-22d6dc5e": () => import(/* webpackChunkName: "v-22d6dc5e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-optimization-project.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-optimization.html
+  "v-6362dc2a": () => import(/* webpackChunkName: "v-6362dc2a" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-optimization.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-render.html
+  "v-1f2d2c21": () => import(/* webpackChunkName: "v-1f2d2c21" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-render.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-ssr.html
+  "v-a31d38ae": () => import(/* webpackChunkName: "v-a31d38ae" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-ssr.html.js").then(({ data }) => data),
+  // path: /front-end-basic/performance/front-end-performance-startup.html
+  "v-5de1491e": () => import(/* webpackChunkName: "v-5de1491e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/performance/front-end-performance-startup.html.js").then(({ data }) => data),
+  // path: /front-end-basic/skill/design-and-manage-front-end-project.html
+  "v-2fbcd3e7": () => import(/* webpackChunkName: "v-2fbcd3e7" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/skill/design-and-manage-front-end-project.html.js").then(({ data }) => data),
+  // path: /front-end-basic/skill/front-end-career-planning.html
+  "v-79288c1e": () => import(/* webpackChunkName: "v-79288c1e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/skill/front-end-career-planning.html.js").then(({ data }) => data),
+  // path: /front-end-basic/skill/research-and-design-process.html
+  "v-246cea5f": () => import(/* webpackChunkName: "v-246cea5f" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/skill/research-and-design-process.html.js").then(({ data }) => data),
+  // path: /front-end-basic/skill/why-project-reviews-are-important.html
+  "v-64a1372e": () => import(/* webpackChunkName: "v-64a1372e" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/skill/why-project-reviews-are-important.html.js").then(({ data }) => data),
   // path: /front-end-basic/understanding/app-component-isolation.html
   "v-1e318ce2": () => import(/* webpackChunkName: "v-1e318ce2" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/understanding/app-component-isolation.html.js").then(({ data }) => data),
   // path: /front-end-basic/understanding/component-communication-with-data-model.html
@@ -135,6 +135,4 @@ export const pagesData = {
   "v-310ff3ea": () => import(/* webpackChunkName: "v-310ff3ea" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/front-end-basic/understanding/web-browser-render.html.js").then(({ data }) => data),
   // path: /404.html
   "v-3706649a": () => import(/* webpackChunkName: "v-3706649a" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/404.html.js").then(({ data }) => data),
-  // path: /.vuepress/dist/
-  "v-54106ccc": () => import(/* webpackChunkName: "v-54106ccc" */"/Users/rain/Documents/rain/doc/gitbook-design-patterns-in-jquery/docs/.vuepress/.temp/pages/.vuepress/dist/index.html.js").then(({ data }) => data),
 }
