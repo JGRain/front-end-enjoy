@@ -1,5 +1,5 @@
 # JGRain的前端游乐场
-[点击这里入场啦](https://github.com/JGRain/front-end-enjoy/)
+[点击这里入场啦](https://jgrain.github.io/front-end-enjoy/)
 
 
 ## 前端游乐场内容
